@@ -1,0 +1,17 @@
+{
+  "verbose": true,
+  "restartable": "rs",
+  "execMap": {
+    "ts": "node --require ts-node/register"
+  },
+  "ignore": [
+    ".git",
+    ".vscode",
+    "node_modules",
+    "dist"
+  ],
+  "watch": [
+    "**/*"
+  ],
+  "ext": "js,json,ts"
+}
