@@ -1,13 +1,13 @@
 import bcrypt from "bcrypt";
-import {Request, Response} from 'express';
+import { Request, Response } from 'express';
 import UserModel from "../models/userModel";
-import {createUser, getUser, UserResult} from "../repositories/accountRepository";
+import { createUser, getUser, UserResult } from "../repositories/accountRepository";
 
 const SALT_ROUNDS = 10;
 
 const signup = async (req: Request, res: Response) => {
   try {
-    const {email, password} = req.query;
+    const { email, password } = req.query;
 
     if (!email || !password) {
       throw new Error('Email e senha são obrigatórios!');
@@ -34,7 +34,7 @@ const signup = async (req: Request, res: Response) => {
 
 const signin = async (req: Request, res: Response) => {
   try {
-    const {email, password} = req.query;
+    const { email, password } = req.query;
 
     if (!email || !password) {
       throw new Error('Email e senha são obrigatórios!');
@@ -59,7 +59,31 @@ const signin = async (req: Request, res: Response) => {
   }
 };
 
+const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.query;
+
+    if (!email || !password) {
+      throw new Error('Email é senha são obrigatórios!');
+    }
+
+    const user = new UserModel({
+      email: email.toString(),
+      password: password.toString(),
+    });
+    const result: UserResult = await createUser(user);
+
+    res.status(result.statusCode).send(result);
+  } catch (error: any) {
+    res.status(400).send({
+      statusCode: 400,
+      message: error.message
+    })
+  }
+};
+
 export default {
   signup,
-  signin
+  signin,
+  deleteUser
 }

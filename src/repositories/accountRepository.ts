@@ -1,6 +1,6 @@
+import bcrypt from "bcrypt";
 import UserModel from "../models/userModel";
 import pool from "../config/databaseConfig";
-import bcrypt from "bcrypt";
 
 interface UserResult {
   statusCode: number,
@@ -88,16 +88,9 @@ const getUser = async (user: UserModel) => {
   }
 };
 
-const updateUser = (user: UserModel) => {
-};
-
-const deleteUser = (user: UserModel) => {
-};
 
 export {
   createUser,
   getUser,
-  updateUser,
-  deleteUser,
   UserResult,
 }

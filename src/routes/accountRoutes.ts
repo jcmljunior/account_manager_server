@@ -1,5 +1,5 @@
 import express from 'express';
-import {ACCOUNT_SIGNIN_ROUTE, ACCOUNT_SIGNUP_ROUTE} from "../config/accountConfig";
+import { ACCOUNT_SIGNIN_ROUTE, ACCOUNT_SIGNUP_ROUTE } from "../config/accountConfig";
 import accountController from "../controllers/accountController";
 
 const router = express.Router();

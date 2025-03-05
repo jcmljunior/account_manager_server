@@ -1,4 +1,4 @@
-import UserEntity, {UserOptions} from '../entities/userEntity';
+import UserEntity, { UserOptions } from '../entities/userEntity';
 
 class UserModel extends UserEntity {
   constructor(options?: Partial<UserOptions>) {
