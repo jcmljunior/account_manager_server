@@ -7,7 +7,7 @@ const SALT_ROUNDS = 10;
 
 const signup = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.query;
+    const { email, password } = req.body;
 
     if (!email || !password) {
       throw new Error('Email e senha são obrigatórios!');
@@ -25,8 +25,8 @@ const signup = async (req: Request, res: Response) => {
 
     res.status(result.statusCode).send(result);
   } catch (error: any) {
-    res.status(400).send({
-      statusCode: 400,
+    res.status(401).send({
+      statusCode: 401,
       message: error.message
     });
   }
@@ -34,7 +34,7 @@ const signup = async (req: Request, res: Response) => {
 
 const signin = async (req: Request, res: Response) => {
   try {
-    const { email, password } = req.query;
+    const { email, password } = req.body;
 
     if (!email || !password) {
       throw new Error('Email e senha são obrigatórios!');
@@ -50,40 +50,20 @@ const signin = async (req: Request, res: Response) => {
 
     const result = await getUser(user);
 
-    res.status(200).json(result);
-  } catch (error: any) {
-    res.status(400).json({
-      statusCode: 400,
-      message: error.message
-    });
-  }
-};
-
-const deleteUser = async (req: Request, res: Response) => {
-  try {
-    const { email, password } = req.query;
-
-    if (!email || !password) {
-      throw new Error('Email é senha são obrigatórios!');
+    if(result.statusCode !== 200) {
+      throw new Error('Email ou senha incorretos.');
     }
 
-    const user = new UserModel({
-      email: email.toString(),
-      password: password.toString(),
-    });
-    const result: UserResult = await createUser(user);
-
-    res.status(result.statusCode).send(result);
+    res.status(200).json(result);
   } catch (error: any) {
-    res.status(400).send({
-      statusCode: 400,
+    res.status(401).json({
+      statusCode: 401,
       message: error.message
-    })
+    });
   }
 };
 
 export default {
   signup,
   signin,
-  deleteUser
 }
